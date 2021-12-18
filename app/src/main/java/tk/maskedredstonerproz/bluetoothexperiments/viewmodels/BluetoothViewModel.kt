@@ -1,6 +1,7 @@
 package tk.maskedredstonerproz.bluetoothexperiments.viewmodels
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
@@ -13,11 +14,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModel
 import tk.maskedredstonerproz.bluetoothexperiments.objects.Constants
 import tk.maskedredstonerproz.bluetoothexperiments.threads.ClientThread
 import tk.maskedredstonerproz.bluetoothexperiments.threads.ServerThread
 
-class BluetoothViewModel(private val context: Activity) {
+@SuppressLint("StaticFieldLeak")
+class BluetoothViewModel(private val context: Activity): ViewModel() {
 
     init {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.S) {
@@ -53,7 +56,7 @@ class BluetoothViewModel(private val context: Activity) {
     }
 
     private val serverThread = ServerThread(bluetoothAdapter)
-    private val clientThread = ClientThread(deviceState.value)
+    private lateinit var clientThread: ClientThread
 
     fun connect() {
         if (isServerState.value) {
@@ -62,6 +65,7 @@ class BluetoothViewModel(private val context: Activity) {
     }
 
     private fun connectAsClient() {
+        clientThread = deviceState.value?.let { ClientThread(it) }!!
         clientThread.run()
     }
 
