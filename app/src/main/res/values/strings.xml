@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bluetooth Experiments</string>
+    <string name="connect">Connect</string>
+    <string name="enable">Enable</string>
+    <string name="discover_devices">Discover Devices</string>
+    <string name="disconnect">disconnect</string>
+    <string name="disable">Disable</string>
+</resources>
