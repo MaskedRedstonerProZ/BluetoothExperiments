@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModel
 import tk.maskedredstonerproz.bluetoothexperiments.objects.Constants
 import tk.maskedredstonerproz.bluetoothexperiments.threads.ClientThread
 import tk.maskedredstonerproz.bluetoothexperiments.threads.ServerThread
+import java.io.IOException
+import java.lang.Exception
 
 @SuppressLint("StaticFieldLeak")
 class BluetoothViewModel(private val context: Activity): ViewModel() {
@@ -74,9 +76,11 @@ class BluetoothViewModel(private val context: Activity): ViewModel() {
     }
 
     fun disconnect() {
-        if (serverThread.isAlive) {
+        try {
+            clientThread.cancel()
+        } catch (e: Exception) {
             serverThread.cancel()
-        } else clientThread.cancel()
+        }
     }
 
     private fun provideBluetoothAdapter(): BluetoothAdapter? {

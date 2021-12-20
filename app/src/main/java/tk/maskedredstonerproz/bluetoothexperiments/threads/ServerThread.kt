@@ -42,5 +42,6 @@ class ServerThread(private val bluetoothAdapter: BluetoothAdapter): StandardThre
         } catch (e: IOException) {
             Log.e(TAG, "Could not close the connect socket", e)
         }
+        Log.d(TAG, "Thread cancelled")
     }
 }
